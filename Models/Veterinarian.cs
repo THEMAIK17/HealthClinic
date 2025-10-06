@@ -20,7 +20,7 @@ public class Veterinarian : Person
     public string ClinicAddress { get; set; }    // Dirección de la clínica
 
     // Relación con citas (no con mascotas)
-    // public List<Appointment> Appointments { get; set; } = new List<Appointment>();
+    public List<Appointment> Appointments { get; set; } = new List<Appointment>();
 
     // Constructor
     public Veterinarian(
