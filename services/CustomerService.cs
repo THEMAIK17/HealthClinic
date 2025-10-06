@@ -1,7 +1,8 @@
-using PetSystem.Models;
-using PatientSystem.Models;
+using HealtClinic.Models;
+using HealtClinic.Models;
 using HealtClinic.Interfaces;
 using HealtClinic.Models;
+
 namespace HealtClinic.Services;
 
 public class CustomerService : ICustomerService

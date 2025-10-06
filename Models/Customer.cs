@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using PatientSystem.Models;
-using PetSystem.Models;
+using HealtClinic.Models;
+using HealtClinic.Models;
 using HealtClinic.Models;
 
 namespace HealtClinic.Models

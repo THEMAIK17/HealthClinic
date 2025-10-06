@@ -1,12 +1,16 @@
 // Implementar la clase Mascota con atributos (nombre, especie, raza, edad)
 // y métodos (mostrar información).
 
-namespace PetSystem.Models;
+namespace HealtClinic.Models;
 
 public class Pet : Animal
 {
     public String Breed { get; set; }
-    public Pet(string name, string specie, byte age, string breed) : base(name, specie, age)
+    public Pet( string name,
+                string specie,
+                byte age,
+                string breed) 
+                : base(name, specie, age)
     {
         Id = Guid.NewGuid();
         Breed = breed;
