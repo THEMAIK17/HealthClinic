@@ -1,4 +1,4 @@
-﻿using HealtClinic.Services;
+﻿using HealthClinic.Services;
 
 
 CustomerService customerService = new CustomerService();

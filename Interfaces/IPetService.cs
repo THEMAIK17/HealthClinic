@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using HealtClinic.Models;
-namespace HealtClinic.Interfaces;
+using HealthClinic.Models;
+namespace HealthClinic.Interfaces;
 
 public interface IPetService
 {

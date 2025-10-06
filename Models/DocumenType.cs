@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HealtClinic.Models;
+namespace HealthClinic.Models;
 
 public class DocumenType
 {

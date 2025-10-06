@@ -1,8 +1,8 @@
 using System.Reflection.Metadata;
-using HealtClinic.Models;
-using HealtClinic.Models;
+using HealthClinic.Models;
+using HealthClinic.Models;
 
-namespace HealtClinic.Models;
+namespace HealthClinic.Models;
 
 public abstract class Person:DocumenType
 {

@@ -1,7 +1,7 @@
 // Implementar la clase Mascota con atributos (nombre, especie, raza, edad)
 // y métodos (mostrar información).
 
-namespace HealtClinic.Models;
+namespace HealthClinic.Models;
 
 public class Pet : Animal
 {

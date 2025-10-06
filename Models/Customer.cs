@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using HealtClinic.Models;
-using HealtClinic.Models;
-using HealtClinic.Models;
+using HealthClinic.Models;
+using HealthClinic.Models;
+using HealthClinic.Models;
 
-namespace HealtClinic.Models
+namespace HealthClinic.Models
 {
     public class Customer: Person
     {

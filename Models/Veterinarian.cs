@@ -2,10 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using HealtClinic.Models;
+using HealthClinic.Models;
 
 namespace HealthClinic.Models;
-
 
 
 public class Veterinarian : Person

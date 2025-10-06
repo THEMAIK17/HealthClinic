@@ -1,5 +1,5 @@
 
-namespace HealtClinic.Models;
+namespace HealthClinic.Models;
 
 public abstract class Animal
 {

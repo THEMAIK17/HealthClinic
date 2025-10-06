@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using HealtClinic.Services;
+using HealthClinic.Services;
 
-using HealtClinic.Models;
+using HealthClinic.Models;
 
-namespace HealtClinic.Interfaces;
+namespace HealthClinic.Interfaces;
 
 public interface ICustomerService
 {
