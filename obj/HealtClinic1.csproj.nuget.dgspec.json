@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/Coder/HealthClinic/HealtClinic1.csproj": {}
+    "/home/Coder/Documentos/MAIKOL/C#/HealthClinic/HealtClinic1.csproj": {}
   },
   "projects": {
-    "/home/Coder/HealthClinic/HealtClinic1.csproj": {
+    "/home/Coder/Documentos/MAIKOL/C#/HealthClinic/HealtClinic1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/Coder/HealthClinic/HealtClinic1.csproj",
+        "projectUniqueName": "/home/Coder/Documentos/MAIKOL/C#/HealthClinic/HealtClinic1.csproj",
         "projectName": "HealtClinic1",
-        "projectPath": "/home/Coder/HealthClinic/HealtClinic1.csproj",
+        "projectPath": "/home/Coder/Documentos/MAIKOL/C#/HealthClinic/HealtClinic1.csproj",
         "packagesPath": "/home/Coder/.nuget/packages/",
-        "outputPath": "/home/Coder/HealthClinic/obj/",
+        "outputPath": "/home/Coder/Documentos/MAIKOL/C#/HealthClinic/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/Coder/.nuget/NuGet/NuGet.Config"
