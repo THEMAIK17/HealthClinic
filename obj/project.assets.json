@@ -8,19 +8,19 @@
     "net8.0": []
   },
   "packageFolders": {
-    "C:\\Users\\MAIKOL\\.nuget\\packages\\": {}
+    "/home/Coder/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Usuarios\\Música\\HealtClinic1\\HealtClinic1.csproj",
+      "projectUniqueName": "/home/Coder/HealthClinic/HealtClinic1.csproj",
       "projectName": "HealtClinic1",
-      "projectPath": "D:\\Usuarios\\Música\\HealtClinic1\\HealtClinic1.csproj",
-      "packagesPath": "C:\\Users\\MAIKOL\\.nuget\\packages\\",
-      "outputPath": "D:\\Usuarios\\Música\\HealtClinic1\\obj\\",
+      "projectPath": "/home/Coder/HealthClinic/HealtClinic1.csproj",
+      "packagesPath": "/home/Coder/.nuget/packages/",
+      "outputPath": "/home/Coder/HealthClinic/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\MAIKOL\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "/home/Coder/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -64,7 +64,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.414/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/snap/dotnet-sdk/256/sdk/8.0.407/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
