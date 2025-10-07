@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HealthClinic.Services;
+namespace HealthClinic.Models;
 
 public abstract class VeterinarianService
 {
