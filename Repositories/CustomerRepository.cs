@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HealthClinic.Database;
 using HealthClinic.Interfaces;
 using HealthClinic.Models;
 
@@ -10,27 +11,32 @@ namespace HealthClinic.Repositories
     public class CustomerRepository : ICustomerRepository
     {
 
+        private readonly DatabaseContext _context; 
 
-        private List<Customer> Customers = new List<Customer>();
+        
+        public CustomerRepository(DatabaseContext context)
+        {
+        _context = context;
+        }
 
         public void RegisterCustomer(Customer customer)
         {
-            Customers.Add(customer);
+            _context.Customers.Add(customer);
         }
 
         public List<Customer> ShowAllCustomers()
         {
-            return Customers;
+            return _context.Customers;
         }
 
         public Customer GetCustomerById(Guid id)
         {
-            return Customers.FirstOrDefault(c => c.Id == id);
+            return _context.Customers.FirstOrDefault(c => c.Id == id);
         }
 
         public void UpdateCustomer(Customer updatedCustomer)
         {
-            var existingCustomer = Customers.FirstOrDefault(c => c.Id == updatedCustomer.Id);
+            var existingCustomer = _context.Customers.FirstOrDefault(c => c.Id == updatedCustomer.Id);
             if (existingCustomer != null)
             {
                 existingCustomer.Name = updatedCustomer.Name;
@@ -47,10 +53,10 @@ namespace HealthClinic.Repositories
 
         public void DeleteCustomer(Guid id)
         {
-            var customer = Customers.FirstOrDefault(c => c.Id == id);
+            var customer = _context.Customers.FirstOrDefault(c => c.Id == id);
             if (customer != null)
             {
-                Customers.Remove(customer);
+                _context.Customers.Remove(customer);
             }
         }
 

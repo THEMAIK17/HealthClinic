@@ -8,9 +8,10 @@ namespace HealthClinic.Interfaces;
 public interface IPetRepository
 {
 
-    void RegisterPet();
-    void ShowAllPets();
-    Pet GetPetById();
-    void UpdatePet();
-    void DeletePet();
+    void RegisterPet(Pet pet);
+    List<Pet> ShowAllPets();
+    Pet GetPetById(Guid id);
+    void UpdatePet(Pet updatedPet);
+    void DeletePet(Guid id);
+    List<Pet> GetPetsByCustomer(Guid customerId);
 }
