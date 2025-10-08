@@ -6,10 +6,11 @@ namespace HealthClinic.Models;
 public class Pet : Animal
 {
     public String Breed { get; set; }
-    public Pet( string name,
+    public Guid OwnerId { get; set; } // Para relacionar la mascota con su cliente
+    public Pet(string name,
                 string specie,
                 byte age,
-                string breed) 
+                string breed)
                 : base(name, specie, age)
     {
         Id = Guid.NewGuid();
@@ -18,7 +19,7 @@ public class Pet : Animal
     }
     public virtual void ShowInfo()
     {
-        Console.WriteLine($"Pet: {Name}, Specie: {Specie}, Breed: {Breed} , Age: {Age} ");
+        Console.WriteLine($"Id: {Id}, Pet: {Name}, Specie: {Specie}, Breed: {Breed} , Age: {Age} ");
     }
 
     public override void SoundEmit()
@@ -27,7 +28,16 @@ public class Pet : Animal
         {
             { "dog", "Guau 🐶" },
             { "cat", "Miau 🐱" },
-            { "parrot", "¡hello! 🦜" }
+            { "parrot", "¡hello! 🦜" },
+            { "hamster", "Squeak 🐹" },
+            { "rabbit", "Sniff 🐰" },
+            { "fish", "Blub blub 🐟" },
+            { "turtle", "..." },
+            { "lizard", "..." },
+            { "snake", "Ssssss 🐍" },
+            { "bird", "Chirp chirp 🐦" },
+            { "frog", "Ribbit 🐸" },
+            { "horse", "Neigh 🐴" }
         };
 
         if (sounds.ContainsKey(Specie.ToLower()))

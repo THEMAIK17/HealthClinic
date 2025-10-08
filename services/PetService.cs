@@ -6,88 +6,127 @@ using HealthClinic.Models;
 using HealthClinic.Models;
 using HealthClinic.Interfaces;
 using HealthClinic.Models;
+using HealthClinic.Repositories;
+
 
 namespace HealthClinic.Services;
 
-public class PetService : IPetRepository
+public class PetService 
 {
+    private readonly PetRepository _repository;
     private readonly List<Customer> _customers;
-    public PetService(List<Customer> Customers)
+
+    public PetService(PetRepository repository, List<Customer> customers)
     {
-        _customers = Customers;
+        _repository = repository;
+        _customers = customers;
     }
     public void RegisterPet()
     {
-        Console.WriteLine("Enter pet details:");
+        Console.WriteLine("\n=== Register New Pet ===");
 
         Console.Write("Name: ");
-        string name = Console.ReadLine();
+        string name = Console.ReadLine()?.Trim().ToLower();
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            Console.WriteLine(" Name is required.");
+            return;
+        }
 
         Console.Write("Specie: ");
-        string specie = Console.ReadLine();
+        string specie = Console.ReadLine()?.Trim().ToLower();
+        if (string.IsNullOrWhiteSpace(specie))
+        {
+            Console.WriteLine(" Specie is required.");
+            return;
+        }
 
         Console.Write("Breed: ");
-        string breed = Console.ReadLine();
+        string breed = Console.ReadLine()?.Trim().ToLower();
+        if (string.IsNullOrWhiteSpace(breed))
+        {
+            Console.WriteLine(" Breed is required.");
+            return;
+        }
 
         Console.Write("Age: ");
-        byte age = byte.Parse(Console.ReadLine());
-
-        Pet pet = new Pet(name, specie, age, breed);
-
-        Console.Write("Enter the Id of the customer to assign this pet: ");
-        string input = Console.ReadLine() ?? "";
-        if (Guid.TryParse(input, out Guid customerId))
+        if (!byte.TryParse(Console.ReadLine(), out byte age) || age == 0)
         {
-            // Buscar el cliente por Id
-            var customer = _customers.FirstOrDefault(c => c.Id == customerId);
+            Console.WriteLine(" Invalid age.");
+            return;
+        }
 
-            if (customer != null)
-            {
-                customer.Pets.Add(pet);
-                Console.WriteLine($"Pet {pet.Name} registered to {customer.Name}.");
-            }
-            else
-            {
-                Console.WriteLine("Customer not found. Pet not registered.");
-            }
-        }
-        else
+        Console.Write("Enter the Customer ID to assign this pet: ");
+        string input = Console.ReadLine()?.Trim().ToLower() ?? "";
+        if (!Guid.TryParse(input, out Guid customerId))
         {
-            Console.WriteLine("Invalid Id format.");
+            Console.WriteLine(" Invalid ID format.");
+            return;
         }
+
+        // Buscar el cliente
+        var customer = _customers.FirstOrDefault(c => c.Id == customerId);
+        if (customer == null)
+        {
+            Console.WriteLine(" Customer not found. Pet not registered.");
+            return;
+        }
+
+        // Crear mascota
+        Pet pet = new Pet(name, specie, age, breed)
+        {
+            OwnerId = customer.Id
+        };
+
+        // Guardar en cliente y repositorio
+        customer.Pets.Add(pet);
+        _repository.RegisterPet(pet);
+
+        Console.WriteLine($"\n Pet '{pet.Name}' successfully registered for {customer.Name}.");
     }
+
+    // ------------------ SHOW ALL ------------------
     public void ShowAllPets()
     {
-        foreach (var customer in _customers)
+        Console.WriteLine("\n=== All Registered Pets ===");
+        var pets = _repository.ShowAllPets();
+
+        if (pets.Count == 0)
         {
-            customer.ToString();
-            foreach (var pet in customer.Pets)
-            {
-                pet.ShowInfo();
-                pet.SoundEmit();
-            }
+            Console.WriteLine(" No pets registered yet.");
+            return;
         }
 
+        foreach (var pet in pets)
+        {
+            pet.ShowInfo();
+            pet.SoundEmit();
+            Console.WriteLine("------------------");
+        }
     }
 
+    // ------------------ GET BY ID ------------------
     public Pet GetPetById()
     {
         Console.Write("\nEnter the Pet ID: ");
-        string input = Console.ReadLine();
+        string input = Console.ReadLine()?.Trim();
 
-        foreach (var customer in _customers)
+        if (!Guid.TryParse(input, out Guid petId))
         {
-            var pet = customer.Pets.FirstOrDefault(p => p.Id.ToString() == input);
-            if (pet != null)
-            {
-                Console.WriteLine("\n✅ Pet found:\n");
-                pet.ShowInfo();
-                return pet;
-            }
+            Console.WriteLine(" Invalid ID format.");
+            return null;
         }
 
-        Console.WriteLine("\n❌ Pet not found.");
-        return null;
+        var pet = _repository.GetPetById(petId);
+        if (pet == null)
+        {
+            Console.WriteLine(" Pet not found.");
+            return null;
+        }
+
+        Console.WriteLine("\nPet found:\n");
+        pet.ShowInfo();
+        return pet;
     }
 
     // ------------------ UPDATE ------------------
@@ -96,30 +135,32 @@ public class PetService : IPetRepository
         Console.WriteLine("\n=== Update Pet ===");
         var pet = GetPetById();
 
-        if (pet != null)
-        {
-            Console.Write($"New Name (current: {pet.Name}): ");
-            string name = Console.ReadLine();
-            if (!string.IsNullOrWhiteSpace(name))
-                pet.Name = name;
+        if (pet == null)
+            return;
 
-            Console.Write($"New Specie (current: {pet.Specie}): ");
-            string specie = Console.ReadLine();
-            if (!string.IsNullOrWhiteSpace(specie))
-                pet.Specie = specie;
+        Console.Write($"New Name (current: {pet.Name}): ");
+        string name = Console.ReadLine()?.Trim().ToLower();
+        if (!string.IsNullOrWhiteSpace(name))
+            pet.Name = name;
 
-            Console.Write($"New Breed (current: {pet.Breed}): ");
-            string breed = Console.ReadLine();
-            if (!string.IsNullOrWhiteSpace(breed))
-                pet.Breed = breed;
+        Console.Write($"New Specie (current: {pet.Specie}): ");
+        string specie = Console.ReadLine()?.Trim().ToLower();
+        if (!string.IsNullOrWhiteSpace(specie))
+            pet.Specie = specie;
 
-            Console.Write($"New Age (current: {pet.Age}): ");
-            string ageInput = Console.ReadLine();
-            if (!string.IsNullOrWhiteSpace(ageInput))
-                pet.Age = byte.Parse(ageInput);
+        Console.Write($"New Breed (current: {pet.Breed}): ");
+        string breed = Console.ReadLine()?.Trim().ToLower();
+        if (!string.IsNullOrWhiteSpace(breed))
+            pet.Breed = breed;
 
-            Console.WriteLine($"\n✅ Pet '{pet.Name}' updated successfully!");
-        }
+        Console.Write($"New Age (current: {pet.Age}): ");
+        string ageInput = Console.ReadLine()?.Trim();
+        if (byte.TryParse(ageInput, out byte newAge) && newAge > 0)
+            pet.Age = newAge;
+
+        _repository.UpdatePet(pet);
+
+        Console.WriteLine($"\n Pet '{pet.Name}' updated successfully!");
     }
 
     // ------------------ DELETE ------------------
@@ -128,23 +169,19 @@ public class PetService : IPetRepository
         Console.WriteLine("\n=== Delete Pet ===");
         var pet = GetPetById();
 
-        if (pet != null)
-        {
-            foreach (var customer in _customers)
-            {
-                if (customer.Pets.Remove(pet))
-                {
-                    Console.WriteLine($"\n🗑️ Pet '{pet.Name}' deleted successfully.");
-                    return;
-                }
-            }
-        }
+        if (pet == null)
+            return;
 
-        Console.WriteLine("\n❌ Pet not found.");
+        _repository.DeletePet(pet.Id);
+
+        var owner = _customers.FirstOrDefault(c => c.Id == pet.OwnerId);
+        if (owner != null)
+            owner.Pets.Remove(pet);
+
+        Console.WriteLine($"\n Pet '{pet.Name}' deleted successfully.");
     }
-
-    
-
 }
-    
+
+
+
 

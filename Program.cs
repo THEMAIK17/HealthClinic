@@ -1,8 +1,13 @@
 ﻿using HealthClinic.Services;
+using HealthClinic.Repositories;
+using HealthClinic.Database;
 
+var dbContext = new DatabaseContext();
+var customerRepository = new CustomerRepository(dbContext);
+var customerService = new CustomerService(customerRepository);
 
-CustomerService customerService = new CustomerService();
-PetService petService = new PetService(customerService.GetAllCustomers());
+var petRepository = new PetRepository(dbContext);
+var petService = new PetService(petRepository, dbContext.Customers);
 bool running = true;
 while (running)
 {

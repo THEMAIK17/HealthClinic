@@ -3,56 +3,61 @@ using HealthClinic.Models;
 using HealthClinic.Interfaces;
 using HealthClinic.Models;
 using HealthClinic.Repositories;
+using HealthClinic.Database;
 
 namespace HealthClinic.Services;
 
-public class CustomerService 
+public class CustomerService
 {
 
-    private readonly CustomerRepository _repository = new CustomerRepository();
+    private readonly CustomerRepository _repository;
+    public CustomerService(CustomerRepository repository)
+    {
+        _repository = repository;
+    }
 
- 
+
     public void RegisterCustomer()
     {
-        Console.WriteLine("\n=== 🧾 Register New Customer ===");
+        Console.WriteLine("\n===  Register New Customer ===");
 
         Console.Write("Name: ");
-        string name = Console.ReadLine();
+        string name = Console.ReadLine()?.Trim().ToLower();
         if (string.IsNullOrWhiteSpace(name))
         {
-            Console.WriteLine("⚠️ Name is required.");
+            Console.WriteLine(" Name is required.");
             return;
         }
 
         Console.Write("Last Name: ");
-        string lastName = Console.ReadLine();
+        string lastName = Console.ReadLine()?.Trim().ToLower();
         if (string.IsNullOrWhiteSpace(lastName))
         {
-            Console.WriteLine("⚠️ Last Name is required.");
+            Console.WriteLine(" Last Name is required.");
             return;
         }
 
         Console.Write("Document Type: ");
-        string documentType = Console.ReadLine();
+        string documentType = Console.ReadLine()?.Trim().ToLower();
 
         Console.Write("Document: ");
-        string document = Console.ReadLine();
+        string document = Console.ReadLine().Trim();
         if (_repository.ShowAllCustomers().Any(c => c.Document == document))
         {
-            Console.WriteLine("⚠️ Document already exists.");
+            Console.WriteLine(" Document already exists.");
             return;
         }
 
         Console.Write("Email: ");
-        string email = Console.ReadLine();
+        string email = Console.ReadLine()?.Trim();
         if (!email.Contains("@"))
         {
-            Console.WriteLine("⚠️ Invalid email format.");
+            Console.WriteLine(" Invalid email format.");
             return;
         }
         if (_repository.ShowAllCustomers().Any(c => c.Email == email))
         {
-            Console.WriteLine("⚠️ Email already exists.");
+            Console.WriteLine(" Email already exists.");
             return;
         }
 
@@ -63,21 +68,36 @@ public class CustomerService
             age = byte.Parse(Console.ReadLine());
             if (age < 1 || age > 120)
             {
-                Console.WriteLine("⚠️ Age must be between 1 and 120.");
+                Console.WriteLine(" Age must be between 1 and 120.");
                 return;
             }
         }
         catch
         {
-            Console.WriteLine("⚠️ Invalid age format. Enter numbers only.");
+            Console.WriteLine(" Invalid age format. Enter numbers only.");
             return;
         }
 
         Console.Write("Address: ");
-        string address = Console.ReadLine();
+        string address = Console.ReadLine()?.Trim().ToLower();
+        if (string.IsNullOrWhiteSpace(address))
+        {
+            Console.WriteLine(" Address is required.");
+            return;
+        }
 
         Console.Write("Phone: ");
-        string phone = Console.ReadLine();
+        string phone = Console.ReadLine()?.Trim();
+        if(string .IsNullOrWhiteSpace(phone))
+        {
+            Console.WriteLine(" Phone is required.");
+            return;
+        }
+        if (_repository.ShowAllCustomers().Any(c => c.Phone == phone))
+        {
+            Console.WriteLine(" Phone already exists.");
+            return;
+        }
 
         Console.Write("Birth Day (YYYY-MM-DD): ");
         DateOnly birthDay;
@@ -87,35 +107,35 @@ public class CustomerService
         }
         catch
         {
-            Console.WriteLine("⚠️ Invalid date format. Example: 2000-05-25");
+            Console.WriteLine(" Invalid date format. Example: 2000-05-25");
             return;
         }
 
         Customer customer = new Customer(name, lastName, documentType, document, email, age, address, phone, birthDay);
         _repository.RegisterCustomer(customer);
 
-        Console.WriteLine($"\n✅ Customer {customer.Name} registered successfully!\n");
+        Console.WriteLine($"\nCustomer {customer.Name} registered successfully!\n");
     }
     public List<Customer> GetAllCustomers()
     {
         return _repository.ShowAllCustomers();
     }
 
-    // ✅ MOSTRAR CLIENTES
+    //  MOSTRAR CLIENTES
     public void ShowAllCustomers()
     {
         var customers = _repository.ShowAllCustomers();
 
         if (customers.Count == 0)
         {
-            Console.WriteLine("⚠️ No customers registered.");
+            Console.WriteLine(" No customers registered.");
             return;
         }
 
-        Console.WriteLine("\n📋 Registered Customers:\n");
+        Console.WriteLine("\n Registered Customers:\n");
         foreach (var c in customers)
         {
-            Console.WriteLine($"🧍 ID: {c.Id}");
+            Console.WriteLine($" ID: {c.Id}");
             Console.WriteLine($"Name: {c.Name} {c.LastName}");
             Console.WriteLine($"Document: {c.DocumentType} - {c.Document}");
             Console.WriteLine($"Email: {c.Email}");
@@ -126,7 +146,7 @@ public class CustomerService
         }
     }
 
-    // ✅ BUSCAR CLIENTE POR ID
+    //  BUSCAR CLIENTE POR ID
     public Customer GetCustomerById()
     {
         Console.Write("Enter the ID of the customer to search: ");
@@ -138,26 +158,26 @@ public class CustomerService
 
             if (customer != null)
             {
-                Console.WriteLine("\n✅ Customer found:\n");
+                Console.WriteLine("\n Customer found:\n");
                 Console.WriteLine($"Name: {customer.Name} {customer.LastName}");
                 Console.WriteLine($"Email: {customer.Email}");
                 Console.WriteLine($"Phone: {customer.Phone}");
             }
             else
             {
-                Console.WriteLine("❌ Customer not found.");
+                Console.WriteLine(" Customer not found.");
             }
 
             return customer;
         }
         else
         {
-            Console.WriteLine("⚠️ Invalid ID format.");
+            Console.WriteLine(" Invalid ID format.");
             return null;
         }
     }
 
-    // ✅ ACTUALIZAR CLIENTE
+    //  ACTUALIZAR CLIENTE
     public void UpdateCustomer()
     {
         Console.Write("Enter the ID of the customer to update: ");
@@ -165,7 +185,7 @@ public class CustomerService
 
         if (!Guid.TryParse(id, out Guid guid))
         {
-            Console.WriteLine("⚠️ Invalid ID format.");
+            Console.WriteLine("Invalid ID format.");
             return;
         }
 
@@ -173,7 +193,7 @@ public class CustomerService
 
         if (customer == null)
         {
-            Console.WriteLine("❌ Customer not found.");
+            Console.WriteLine(" Customer not found.");
             return;
         }
 
@@ -190,7 +210,7 @@ public class CustomerService
         {
             if (!email.Contains("@"))
             {
-                Console.WriteLine("⚠️ Invalid email. Update cancelled.");
+                Console.WriteLine(" Invalid email. Update cancelled.");
                 return;
             }
             customer.Email = email;
@@ -206,16 +226,16 @@ public class CustomerService
             }
             catch
             {
-                Console.WriteLine("⚠️ Invalid age. Update cancelled.");
+                Console.WriteLine(" Invalid age. Update cancelled.");
                 return;
             }
         }
 
         _repository.UpdateCustomer(customer);
-        Console.WriteLine($"\n✅ Customer {customer.Name} updated successfully!\n");
+        Console.WriteLine($"\n Customer {customer.Name} updated successfully!\n");
     }
 
-    // ✅ ELIMINAR CLIENTE
+    //  ELIMINAR CLIENTE
     public void DeleteCustomer()
     {
         Console.Write("Enter the ID of the customer to delete: ");
@@ -223,11 +243,11 @@ public class CustomerService
 
         if (!Guid.TryParse(id, out Guid guid))
         {
-            Console.WriteLine("⚠️ Invalid ID format.");
+            Console.WriteLine(" Invalid ID format.");
             return;
         }
 
         _repository.DeleteCustomer(guid);
-        Console.WriteLine("\n🗑️ Customer deleted successfully (if it existed).\n");
+        Console.WriteLine("\n Customer deleted successfully (if it existed).\n");
     }
 }
