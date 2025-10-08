@@ -9,7 +9,7 @@ using HealthClinic.Models;
 
 namespace HealthClinic.Services;
 
-public class PetService : IPetService
+public class PetService : IPetRepository
 {
     private readonly List<Customer> _customers;
     public PetService(List<Customer> Customers)

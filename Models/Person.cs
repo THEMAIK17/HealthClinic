@@ -4,13 +4,14 @@ using HealthClinic.Models;
 
 namespace HealthClinic.Models;
 
-public abstract class Person:DocumenType
+public abstract class Person
 {
     private string address;
     private string phone;
 
     public Guid Id { get; set; }
     public String Name { get; set; }
+    public String DocumentType { get; set; }
 
     public String LastName { get; set; }
     public String Document { get; set; }
@@ -29,17 +30,17 @@ public abstract class Person:DocumenType
 
     public Person(  string name,
                     string lastname,
-                    string documentName,
+                    string documentType,
                     string document,
                     string email,
                     byte age,
                     string address,
-                    string phone): base(documentName)
+                    string phone)
     {
         Id = Guid.NewGuid();
         Name = name;
         LastName = lastname;
-        DocumentName = documentName;
+        DocumentType = documentType;
         Document = document;
         Email = email;
         Age = age;
@@ -53,6 +54,6 @@ public abstract class Person:DocumenType
     // Override ToString to display patient info
     public virtual void ToString()
     {
-        Console.WriteLine($"Id: {Id}, Name: {Name},Lastname: {LastName}, DocumentType: {DocumentName}, Document: {Document}, Email: {Email}, Age: {Age}, Address: {Address}, Phone: {Phone}");
+        Console.WriteLine($"Id: {Id}, Name: {Name},Lastname: {LastName}, DocumentType: {DocumentType}, Document: {Document}, Email: {Email}, Age: {Age}, Address: {Address}, Phone: {Phone}");
     }
 }

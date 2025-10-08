@@ -2,35 +2,76 @@ using HealthClinic.Models;
 using HealthClinic.Models;
 using HealthClinic.Interfaces;
 using HealthClinic.Models;
+using HealthClinic.Repositories;
 
 namespace HealthClinic.Services;
 
-public class CustomerService : ICustomerService
+public class CustomerService 
 {
 
-    public List<Customer> Customers = new List<Customer>();
+    private readonly CustomerRepository _repository = new CustomerRepository();
 
+ 
     public void RegisterCustomer()
     {
-        Console.WriteLine("Enter Customer details:");
+        Console.WriteLine("\n=== 🧾 Register New Customer ===");
 
         Console.Write("Name: ");
         string name = Console.ReadLine();
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            Console.WriteLine("⚠️ Name is required.");
+            return;
+        }
 
         Console.Write("Last Name: ");
-        string lastname = Console.ReadLine();
+        string lastName = Console.ReadLine();
+        if (string.IsNullOrWhiteSpace(lastName))
+        {
+            Console.WriteLine("⚠️ Last Name is required.");
+            return;
+        }
 
         Console.Write("Document Type: ");
-        string documentName = Console.ReadLine();
+        string documentType = Console.ReadLine();
 
         Console.Write("Document: ");
         string document = Console.ReadLine();
+        if (_repository.ShowAllCustomers().Any(c => c.Document == document))
+        {
+            Console.WriteLine("⚠️ Document already exists.");
+            return;
+        }
 
         Console.Write("Email: ");
         string email = Console.ReadLine();
+        if (!email.Contains("@"))
+        {
+            Console.WriteLine("⚠️ Invalid email format.");
+            return;
+        }
+        if (_repository.ShowAllCustomers().Any(c => c.Email == email))
+        {
+            Console.WriteLine("⚠️ Email already exists.");
+            return;
+        }
 
         Console.Write("Age: ");
-        byte age = byte.Parse(Console.ReadLine());
+        byte age = 0;
+        try
+        {
+            age = byte.Parse(Console.ReadLine());
+            if (age < 1 || age > 120)
+            {
+                Console.WriteLine("⚠️ Age must be between 1 and 120.");
+                return;
+            }
+        }
+        catch
+        {
+            Console.WriteLine("⚠️ Invalid age format. Enter numbers only.");
+            return;
+        }
 
         Console.Write("Address: ");
         string address = Console.ReadLine();
@@ -39,155 +80,154 @@ public class CustomerService : ICustomerService
         string phone = Console.ReadLine();
 
         Console.Write("Birth Day (YYYY-MM-DD): ");
-        DateOnly birthDay = DateOnly.Parse(Console.ReadLine());
+        DateOnly birthDay;
+        try
+        {
+            birthDay = DateOnly.Parse(Console.ReadLine());
+        }
+        catch
+        {
+            Console.WriteLine("⚠️ Invalid date format. Example: 2000-05-25");
+            return;
+        }
 
-        Customer customer = new Customer(name, lastname, documentName, document, email, age, address, phone, birthDay);
-        Customers.Add(customer);
-        Console.WriteLine($"Customer {customer.Name} registered.");
+        Customer customer = new Customer(name, lastName, documentType, document, email, age, address, phone, birthDay);
+        _repository.RegisterCustomer(customer);
+
+        Console.WriteLine($"\n✅ Customer {customer.Name} registered successfully!\n");
+    }
+    public List<Customer> GetAllCustomers()
+    {
+        return _repository.ShowAllCustomers();
     }
 
+    // ✅ MOSTRAR CLIENTES
     public void ShowAllCustomers()
     {
-        foreach (var customer in Customers)
+        var customers = _repository.ShowAllCustomers();
+
+        if (customers.Count == 0)
         {
-            customer.ToString();
+            Console.WriteLine("⚠️ No customers registered.");
+            return;
+        }
+
+        Console.WriteLine("\n📋 Registered Customers:\n");
+        foreach (var c in customers)
+        {
+            Console.WriteLine($"🧍 ID: {c.Id}");
+            Console.WriteLine($"Name: {c.Name} {c.LastName}");
+            Console.WriteLine($"Document: {c.DocumentType} - {c.Document}");
+            Console.WriteLine($"Email: {c.Email}");
+            Console.WriteLine($"Age: {c.Age}");
+            Console.WriteLine($"Address: {c.Address}");
+            Console.WriteLine($"Phone: {c.Phone}");
+            Console.WriteLine($"Birth Day: {c.BirthDay}\n");
         }
     }
 
+    // ✅ BUSCAR CLIENTE POR ID
     public Customer GetCustomerById()
     {
+        Console.Write("Enter the ID of the customer to search: ");
+        string id = Console.ReadLine();
 
-        Console.WriteLine("Enter the ID of the customer to search: ");
-        string id = Console.ReadLine() ?? "";
         if (Guid.TryParse(id, out Guid guid))
         {
-            var customer = Customers.FirstOrDefault(c => c.Id == guid);
+            var customer = _repository.GetCustomerById(guid);
 
             if (customer != null)
             {
                 Console.WriteLine("\n✅ Customer found:\n");
-                Console.WriteLine($"ID: {customer.Id}");
                 Console.WriteLine($"Name: {customer.Name} {customer.LastName}");
-                Console.WriteLine($"Document Type: {customer.DocumentName}");
-                Console.WriteLine($"Document: {customer.Document}");
                 Console.WriteLine($"Email: {customer.Email}");
-                Console.WriteLine($"Age: {customer.Age}");
-                Console.WriteLine($"Address: {customer.Address}");
                 Console.WriteLine($"Phone: {customer.Phone}");
-                Console.WriteLine($"Birth Day: {customer.BirthDay}");
             }
             else
             {
-                Console.WriteLine("\n❌ Customer not found.\n");
+                Console.WriteLine("❌ Customer not found.");
             }
 
             return customer;
         }
-
         else
         {
-            Console.WriteLine("Invalid Id format.");
+            Console.WriteLine("⚠️ Invalid ID format.");
             return null;
         }
-
-
     }
 
+    // ✅ ACTUALIZAR CLIENTE
     public void UpdateCustomer()
-{
-    Console.Write("Enter the ID of the customer to update: ");
-    string input = Console.ReadLine();
-
-    if (Guid.TryParse(input, out Guid guid_update))
     {
-        // Buscar directamente al cliente en la lista, sin pasar parámetro
-        var existingCustomer = Customers.FirstOrDefault(c => c.Id == guid_update);
+        Console.Write("Enter the ID of the customer to update: ");
+        string id = Console.ReadLine();
 
-        if (existingCustomer != null)
+        if (!Guid.TryParse(id, out Guid guid))
         {
-            Console.WriteLine($"\nUpdating data for {existingCustomer.Name} {existingCustomer.LastName}:\n");
-
-            Console.Write("New Name (leave empty to keep current): ");
-            string name = Console.ReadLine();
-            if (!string.IsNullOrWhiteSpace(name))
-                existingCustomer.Name = name;
-
-            Console.Write("New Last Name (leave empty to keep current): ");
-            string lastName = Console.ReadLine();
-            if (!string.IsNullOrWhiteSpace(lastName))
-                existingCustomer.LastName = lastName;
-
-            Console.Write("New Document Type (leave empty to keep current): ");
-            string documentName = Console.ReadLine();
-            if (!string.IsNullOrWhiteSpace(documentName))
-                existingCustomer.DocumentName = documentName;
-
-            Console.Write("New Document (leave empty to keep current): ");
-            string document = Console.ReadLine();
-            if (!string.IsNullOrWhiteSpace(document))
-                existingCustomer.Document = document;
-
-            Console.Write("New Email (leave empty to keep current): ");
-            string email = Console.ReadLine();
-            if (!string.IsNullOrWhiteSpace(email))
-                existingCustomer.Email = email;
-
-            Console.Write("New Age (leave empty to keep current): ");
-            string ageInput = Console.ReadLine();
-            if (!string.IsNullOrWhiteSpace(ageInput))
-                existingCustomer.Age = byte.Parse(ageInput);
-
-            Console.Write("New Address (leave empty to keep current): ");
-            string address = Console.ReadLine();
-            if (!string.IsNullOrWhiteSpace(address))
-                existingCustomer.Address = address;
-
-            Console.Write("New Phone (leave empty to keep current): ");
-            string phone = Console.ReadLine();
-            if (!string.IsNullOrWhiteSpace(phone))
-                existingCustomer.Phone = phone;
-
-            Console.Write("New Birth Day (YYYY-MM-DD) (leave empty to keep current): ");
-            string birthDayInput = Console.ReadLine();
-            if (!string.IsNullOrWhiteSpace(birthDayInput))
-                existingCustomer.BirthDay = DateOnly.Parse(birthDayInput);
-
-            Console.WriteLine($"\n✅ Customer {existingCustomer.Name} updated successfully!\n");
+            Console.WriteLine("⚠️ Invalid ID format.");
+            return;
         }
-        else
+
+        var customer = _repository.GetCustomerById(guid);
+
+        if (customer == null)
         {
-            Console.WriteLine("\n❌ Customer not found.\n");
+            Console.WriteLine("❌ Customer not found.");
+            return;
         }
-    }
-    else
-    {
-        Console.WriteLine("\n⚠️ Invalid ID format.\n");
-    }
-}
 
+        Console.WriteLine($"\nUpdating data for {customer.Name} {customer.LastName}:");
 
+        Console.Write("New Name (leave empty to keep current): ");
+        string name = Console.ReadLine();
+        if (!string.IsNullOrWhiteSpace(name))
+            customer.Name = name;
+
+        Console.Write("New Email (leave empty to keep current): ");
+        string email = Console.ReadLine();
+        if (!string.IsNullOrWhiteSpace(email))
+        {
+            if (!email.Contains("@"))
+            {
+                Console.WriteLine("⚠️ Invalid email. Update cancelled.");
+                return;
+            }
+            customer.Email = email;
+        }
+
+        Console.Write("New Age (leave empty to keep current): ");
+        string ageInput = Console.ReadLine();
+        if (!string.IsNullOrWhiteSpace(ageInput))
+        {
+            try
+            {
+                customer.Age = byte.Parse(ageInput);
+            }
+            catch
+            {
+                Console.WriteLine("⚠️ Invalid age. Update cancelled.");
+                return;
+            }
+        }
+
+        _repository.UpdateCustomer(customer);
+        Console.WriteLine($"\n✅ Customer {customer.Name} updated successfully!\n");
+    }
+
+    // ✅ ELIMINAR CLIENTE
     public void DeleteCustomer()
     {
         Console.Write("Enter the ID of the customer to delete: ");
-        string input = Console.ReadLine();
+        string id = Console.ReadLine();
 
-        if (Guid.TryParse(input, out Guid id))
+        if (!Guid.TryParse(id, out Guid guid))
         {
-            var customer = Customers.FirstOrDefault(c => c.Id == id);
-            if (customer != null)
-            {
-                Customers.Remove(customer);
-                Console.WriteLine($"\n🗑️ Customer {customer.Name} deleted successfully.\n");
-            }
-            else
-            {
-                Console.WriteLine("\n❌ Customer not found.\n");
-            }
-        }
-        else
-        {
-            Console.WriteLine("\n⚠️ Invalid ID format.\n");
+            Console.WriteLine("⚠️ Invalid ID format.");
+            return;
         }
 
+        _repository.DeleteCustomer(guid);
+        Console.WriteLine("\n🗑️ Customer deleted successfully (if it existed).\n");
     }
 }
