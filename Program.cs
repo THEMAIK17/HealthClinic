@@ -2,7 +2,7 @@
 
 
 CustomerService customerService = new CustomerService();
-PetService petService = new PetService(customerService.Customers);
+PetService petService = new PetService(customerService.GetAllCustomers());
 bool running = true;
 while (running)
 {

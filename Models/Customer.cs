@@ -15,14 +15,14 @@ namespace HealthClinic.Models
 
         internal Customer( string name,
                            string lastname,
-                           String documentName,
+                           String documentType,
                            string document,
                            string email,
                            byte age,
                            string address,
                            string phone,
                            DateOnly birthDay) 
-                           : base(name,lastname,documentName,document,email, age, address, phone)
+                           : base(name,lastname,documentType,document,email, age, address, phone)
         {
             Id = Guid.NewGuid();
             BirthDay = birthDay;

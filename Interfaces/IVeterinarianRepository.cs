@@ -6,7 +6,7 @@ using HealthClinic.Models;
 
 namespace HealthClinic.Interfaces;
 
-public interface IVeterinarian
+public interface IVeterinarianRepository
 {
 
     void RegisterVeterinarian();

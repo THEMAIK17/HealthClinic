@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using HealthClinic.Models;
 namespace HealthClinic.Interfaces;
 
-public interface IPetService
+public interface IPetRepository
 {
 
     void RegisterPet();
