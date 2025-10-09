@@ -16,6 +16,7 @@ public class VeterinarianService
     {
         _repository = repository;
 
+        
     }
 
     public void RegisterVeterinarian()
@@ -130,8 +131,9 @@ public class VeterinarianService
         {
             Console.WriteLine(" Clinic Address is required.");
             return;
+
         }
-        var veterinarian = new Veterinarian(name,
+        Veterinarian veterinarian = new Veterinarian(name,
                                               lastName,
                                               documentType,
                                               document,
@@ -147,6 +149,8 @@ public class VeterinarianService
                                               clinicAddress);
         _repository.RegisterVeterinarian(veterinarian);
         Console.WriteLine("Veterinarian registered successfully!");
+        Console.WriteLine($"ID: {veterinarian.Id}");
+        
     }
 
     public void ShowAllVeterinarians()
@@ -161,26 +165,39 @@ public class VeterinarianService
         Console.WriteLine("List of Veterinarians:");
         foreach (var vet in veterinarians)
         {
-            vet.ToString();
-            Console.WriteLine("---------------------------");
+            Console.WriteLine(vet.ToString());
+            Console.WriteLine("--------------------------------------------");
         }
     }
 
-    public void GetVeterinarianById(Guid id)
+    public Veterinarian GetVeterinarianById()
+
     {
+        Console.Write("Enter Veterinarian ID: ");
+
+        string input = Console.ReadLine()?.Trim();
+        if (!Guid.TryParse(input, out Guid id))
+        {
+            Console.WriteLine("Invalid ID format.");
+            return null;
+
+        }
         var vet = _repository.GetVeterinarianById(id);
         if (vet == null)
         {
             Console.WriteLine("Veterinarian not found.");
-            return;
+            return null;
         }
-        vet.ToString();
+        Console.WriteLine("\n veterinarian found:\n");
+
+        Console.WriteLine(vet.ToString());
+        return vet;
     }
 
     public void UpdateVeterinarian()
     {
         Console.Write("Enter the ID of the veterinarian to update: ");
-        string input = Console.ReadLine()?.Trim().ToLower() ?? "";
+        string input = Console.ReadLine()?.Trim();
         if (!Guid.TryParse(input, out Guid vetId))
         {
             Console.WriteLine(" Invalid ID format.");
@@ -188,6 +205,7 @@ public class VeterinarianService
         }
 
         var existingVet = _repository.GetVeterinarianById(vetId);
+        
         if (existingVet == null)
         {
             Console.WriteLine(" Veterinarian not found.");
@@ -247,6 +265,7 @@ public class VeterinarianService
         Console.Write($"Enter Phone ({existingVet.Phone}): ");
         var phone = Console.ReadLine().Trim();
         if (string.IsNullOrWhiteSpace(phone)) phone = existingVet.Phone;
+        
         Console.Write($"Enter Birth Day ({existingVet.BirthDay}): ");
         var birthDayInput = Console.ReadLine().Trim();
         DateOnly birthDay;
@@ -256,7 +275,8 @@ public class VeterinarianService
             Console.WriteLine(" Invalid date format.");
             return;
         }
-        Console.Write($"Enter License Number ({existingVet.LicenseNumber}): ");
+       
+       Console.Write($"Enter License Number ({existingVet.LicenseNumber}): ");
         var licenseNumber = Console.ReadLine().Trim();
         if (string.IsNullOrWhiteSpace(licenseNumber)) licenseNumber = existingVet.LicenseNumber;
         else if (_repository.ShowAllVeterinarians().Any(v => v.LicenseNumber == licenseNumber && v.Id != vetId))
@@ -324,9 +344,6 @@ public class VeterinarianService
         Console.WriteLine("Veterinarian deleted successfully!");
     }
 
-    internal void GetVeterinarianById()
-    {
-        throw new NotImplementedException();
-    }
+
 }
 

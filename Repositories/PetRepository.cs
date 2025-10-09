@@ -30,6 +30,7 @@ public class PetRepository : IPetRepository
 
     public Pet GetPetById(Guid id)
     {
+        
         return _context.Pets.FirstOrDefault(p => p.Id == id);
     }
 

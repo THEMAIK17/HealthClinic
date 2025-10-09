@@ -52,11 +52,17 @@ public abstract class Person
     }
 
 
-    // Constructor
-
-    // Override ToString to display patient info
-    public virtual void ToString()
+   
+    public virtual string ToString()
     {
-        Console.WriteLine($"Id: {Id}, Name: {Name},Lastname: {LastName}, DocumentType: {DocumentType}, Document: {Document}, Email: {Email}, Age: {Age}, Address: {Address}, Phone: {Phone}");
+        return  $@"Id: {Id}
+            Name: { Name}
+            Lastname: { LastName}
+            DocumentType: { DocumentType}
+            Document: { Document}
+            Email: { Email}
+            Age: { Age}
+            Address: { Address} 
+            Phone: {Phone}";
     }
 }
