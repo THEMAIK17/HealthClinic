@@ -9,9 +9,13 @@ namespace HealthClinic.Interfaces;
 public interface IVeterinarianRepository
 {
 
-    void RegisterVeterinarian();
-    void ShowAllVeterinarians();
-    Veterinarian GetVeterinarianById();
-    void UpdateVeterinarian();
-    void DeleteVeterinarian();
+    void RegisterVeterinarian(Veterinarian veterinarian);
+    List<Veterinarian>ShowAllVeterinarians();
+    Veterinarian GetVeterinarianById(Guid id);
+    void UpdateVeterinarian(Veterinarian updatedVeterinarian);
+    void DeleteVeterinarian(Guid id);
 }
+
+
+
+   

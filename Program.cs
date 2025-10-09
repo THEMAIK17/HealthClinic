@@ -1,13 +1,20 @@
 ﻿using HealthClinic.Services;
 using HealthClinic.Repositories;
 using HealthClinic.Database;
+using HealthClinic.Models;
+using HealthClinic.services;
 
 var dbContext = new DatabaseContext();
+
 var customerRepository = new CustomerRepository(dbContext);
 var customerService = new CustomerService(customerRepository);
 
 var petRepository = new PetRepository(dbContext);
 var petService = new PetService(petRepository, dbContext.Customers);
+
+var veterinarianRepository = new VeterinarianRepository(dbContext);
+var veterinarianService = new VeterinarianService(veterinarianRepository);
+
 bool running = true;
 while (running)
 {
@@ -99,7 +106,39 @@ while (running)
             }
             break;
         case "3":
-            petService.RegisterPet();
+            Console.Clear();
+            Console.WriteLine("\n--- Menú Principal ---");
+            Console.WriteLine("1. registrar médico veterinario");
+            Console.WriteLine("2. mostrar todos los médicos veterinarios");
+            Console.WriteLine("3. buscar veterinario por ID");
+            Console.WriteLine("4. editar médico veterinario");
+            Console.WriteLine("5. eliminar veterinario");
+            Console.WriteLine("0. Salir");
+            Console.Write("Seleccione una opción: ");
+
+            string optionVeterinarian = Console.ReadLine() ?? "";
+            switch (optionVeterinarian)
+            {
+                case "1":
+                    veterinarianService.RegisterVeterinarian();   
+                    break;
+                case "2":
+                    veterinarianService.ShowAllVeterinarians();
+                    break;
+                case "3":
+                    veterinarianService.GetVeterinarianById(); 
+                    break;
+                case "4":
+                    veterinarianService.UpdateVeterinarian();
+                    break;
+                case "0":
+                    running = false;
+                    Console.WriteLine("Saliendo...");
+                    break;
+                default:
+                    Console.WriteLine("Opción inválida. Intente de nuevo.");
+                    break;
+            }
             break;
         case "4":
             petService.ShowAllPets();

@@ -10,7 +10,6 @@ namespace HealthClinic.Models
 {
     public class Customer: Person
     {
-        internal DateOnly BirthDay { get; set; }
         internal List<Pet> Pets { get; set; } = new List<Pet>();
 
         internal Customer( string name,
@@ -22,10 +21,10 @@ namespace HealthClinic.Models
                            string address,
                            string phone,
                            DateOnly birthDay) 
-                           : base(name,lastname,documentType,document,email, age, address, phone)
+                           : base(name,lastname,documentType,document,email, age, address, phone, birthDay)
         {
             Id = Guid.NewGuid();
-            BirthDay = birthDay;
+
         }
     }
 }
