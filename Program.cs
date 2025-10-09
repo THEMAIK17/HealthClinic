@@ -15,6 +15,7 @@ var petService = new PetService(petRepository, dbContext.Customers);
 var veterinarianRepository = new VeterinarianRepository(dbContext);
 var veterinarianService = new VeterinarianService(veterinarianRepository);
 
+
 bool running = true;
 while (running)
 {
@@ -22,7 +23,7 @@ while (running)
     Console.WriteLine("\n--- Menú Principal ---");
     Console.WriteLine("1. tramites clientes");
     Console.WriteLine("2. tramites mascotas");
-    Console.WriteLine("3. tramites veterinaios");
+    Console.WriteLine("3. tramites veterinarios");
     Console.WriteLine("4. Mostrar todas las mascotas");
     Console.WriteLine("0. Salir");
     Console.Write("Seleccione una opción: ");
@@ -130,6 +131,9 @@ while (running)
                     break;
                 case "4":
                     veterinarianService.UpdateVeterinarian();
+                    break;
+                case "5":
+                    veterinarianService.DeleteVeterinarian();
                     break;
                 case "0":
                     running = false;
