@@ -13,5 +13,8 @@ namespace HealthClinic.Database
 
         private List<Pet> _pets = new List<Pet>();
         public List<Pet> Pets => _pets;
+
+        private List<Veterinarian> _veterinarians = new List<Veterinarian>();
+        public List<Veterinarian> Veterinarians => _veterinarians;
     }
 }

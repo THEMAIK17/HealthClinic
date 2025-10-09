@@ -16,6 +16,7 @@ public abstract class Person
     public String LastName { get; set; }
     public String Document { get; set; }
     public String Email { get; set; }
+    public DateOnly BirthDay { get; set; }
     public Byte Age { get; set; }
     public  String Address
     {
@@ -28,14 +29,15 @@ public abstract class Person
         set => phone = value;
     }
 
-    public Person(  string name,
+    public Person(string name,
                     string lastname,
                     string documentType,
                     string document,
                     string email,
                     byte age,
                     string address,
-                    string phone)
+                    string phone,
+                    DateOnly birthDay)
     {
         Id = Guid.NewGuid();
         Name = name;
@@ -46,6 +48,7 @@ public abstract class Person
         Age = age;
         Address = address;
         Phone = phone;
+        BirthDay = birthDay;
     }
 
 

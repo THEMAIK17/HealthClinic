@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using HealthClinic.Interfaces;
 using HealthClinic.Models;
 using HealthClinic.Database;
-using HealthClinic.Interfaces;
 
 namespace HealthClinic.Repositories;
 
