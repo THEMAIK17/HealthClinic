@@ -21,7 +21,12 @@ public class Appointment
     public Veterinarian Veterinarian { get; set; } // Veterinario asignado
 
     // Constructor
-    public Appointment(DateTime date, string reason, Customer customer, Pet pet, Veterinarian veterinarian)
+    public Appointment(DateTime date,
+                        string reason,
+                        Customer customer,
+                        string status,
+                        Pet pet,
+                        Veterinarian veterinarian)
     {
         Id = Guid.NewGuid();
         Date = date;
