@@ -85,7 +85,7 @@ Data is entered via the console, with validations ensuring data integrity.
 
 The solution is organized using a layered architecture with separation of concerns. It follows SOLID principles and is easy to maintain or scale.
 
-HealthClinic/
+``` HealthClinic/
 │
 ├── App.csproj # Project file
 ├── Program.cs # Entry point (Main menu loop)
@@ -121,7 +121,7 @@ HealthClinic/
 │ ├── ShowMenuPet.cs
 │ ├── ShowMenuVeterinarian.cs
 │ └── ShowMenuAppointment.cs
-
+```
 ### Layer Responsibilities
 
 - **Models**: Define core entities and their properties.  
