@@ -10,11 +10,13 @@ namespace HealthClinic.Models
 {
     public class Customer : Person
     {
+        // List of pets owned by the customer
         internal List<Pet> Pets { get; set; } = new List<Pet>();
 
+        // Constructor initializing customer properties and generating unique ID
         internal Customer(string name,
                            string lastname,
-                           String documentType,
+                           string documentType,
                            string document,
                            string email,
                            byte age,
@@ -22,11 +24,9 @@ namespace HealthClinic.Models
                            string phone,
                            DateOnly birthDay)
                            : base(name, lastname, documentType, document, email, age, address, phone, birthDay)
-        {
-            Id = Guid.NewGuid();
+        {}
 
-        }
-
+        // Returns a brief summary of the customer (full name)
         public string ShowSummary()
         {
             return $"{Name} {LastName}";

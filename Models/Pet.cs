@@ -5,8 +5,13 @@ namespace HealthClinic.Models;
 
 public class Pet : Animal
 {
-    public String Breed { get; set; }
-    public Guid OwnerId { get; set; } // Para relacionar la mascota con su cliente
+    // Breed of the pet
+    public string Breed { get; set; }
+
+    // ID of the owner (customer) related to this pet
+    public Guid OwnerId { get; set; }
+
+    // Constructor to initialize the pet's basic properties and breed
     public Pet(string name,
                 string specie,
                 byte age,
@@ -15,13 +20,15 @@ public class Pet : Animal
     {
         Id = Guid.NewGuid();
         Breed = breed;
-
     }
+
+    // Displays detailed info about the pet
     public virtual void ShowInfo()
     {
-        Console.WriteLine($"Id: {Id}, Pet: {Name}, Specie: {Specie}, Breed: {Breed} , Age: {Age} ");
+        Console.WriteLine($"Id: {Id}, Pet: {Name}, Specie: {Specie}, Breed: {Breed}, Age: {Age}");
     }
 
+    // Emits the sound typical for the pet's species
     public override void SoundEmit()
     {
         var sounds = new Dictionary<string, string>
@@ -41,11 +48,13 @@ public class Pet : Animal
         };
 
         if (sounds.ContainsKey(Specie.ToLower()))
-            Console.WriteLine($"{Name} dice: {sounds[Specie.ToLower()]}");
+            Console.WriteLine($"{Name} says: {sounds[Specie.ToLower()]}");
         else
-            Console.WriteLine($"{Name} hace un sonido desconocido...");
+            Console.WriteLine($"{Name} makes an unknown sound...");
     }
-     public string ShowSummary()
+
+    // Returns a short summary string with pet's name and species
+    public string ShowSummary()
     {
         return $"{Name} ({Specie})";
     }

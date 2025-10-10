@@ -13,13 +13,13 @@ namespace HealthClinic.Services;
 
 public class PetService 
 {
-    private readonly PetRepository _repository;
-    private readonly List<Customer> _customers;
+    private readonly PetRepository _repository; // Repository to manage pet data
+    private readonly List<Customer> _customers; // List of customers to link pets to owners
 
     public PetService(PetRepository repository, List<Customer> customers)
     {
-        _repository = repository;
-        _customers = customers;
+        _repository = repository; // Inject pet repository
+        _customers = customers;   // Inject customer list
     }
     public void RegisterPet()
     {

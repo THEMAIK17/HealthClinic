@@ -9,8 +9,10 @@ namespace HealthClinic.Services;
 
 public class CustomerService
 {
-
+    // Repository for customer data access
     private readonly CustomerRepository _repository;
+    
+    // Inject repository via constructor
     public CustomerService(CustomerRepository repository)
     {
         _repository = repository;
@@ -110,7 +112,7 @@ public class CustomerService
             Console.WriteLine(" Invalid date format. Example: 2000-05-25");
             return;
         }
-
+        // Create new customer object with validated data
         Customer customer = new Customer(name, lastName, documentType, document, email, age, address, phone, birthDay);
         _repository.RegisterCustomer(customer);
 
@@ -118,10 +120,10 @@ public class CustomerService
     }
     public List<Customer> GetAllCustomers()
     {
-        return _repository.ShowAllCustomers();
+        return _repository.ShowAllCustomers();// Return all customers from repository
     }
 
-    //  MOSTRAR CLIENTES
+    // Display all customers in console
     public void ShowAllCustomers()
     {
         var customers = _repository.ShowAllCustomers();
@@ -146,7 +148,7 @@ public class CustomerService
         }
     }
 
-    //  BUSCAR CLIENTE POR ID
+     // Search for a customer by ID
     public Customer GetCustomerById()
     {
         Console.Write("Enter the ID of the customer to search: ");
@@ -177,7 +179,7 @@ public class CustomerService
         }
     }
 
-    //  ACTUALIZAR CLIENTE
+    // Update customer data
     public void UpdateCustomer()
     {
         Console.Write("Enter the ID of the customer to update: ");
@@ -235,7 +237,7 @@ public class CustomerService
         Console.WriteLine($"\n Customer {customer.Name} updated successfully!\n");
     }
 
-
+     // Delete customer by ID
     public void DeleteCustomer()
     {
         Console.Write("Enter the ID of the customer to delete: ");

@@ -9,19 +9,17 @@ namespace HealthClinic.Models;
 
 public class Veterinarian : Person
 {
+    // Professional information
+    public string LicenseNumber { get; set; }  
+    public string Specialty { get; set; }       
+    public int YearsOfExperience { get; set; }  
+    public string Shift { get; set; }             
 
-    // Información profesional
-    public string LicenseNumber { get; set; }    // Número de licencia profesional
-    public string Specialty { get; set; }        // Ejemplo: "Cirugía", "Dermatología"
-    public int YearsOfExperience { get; set; }   // Años de experiencia
-    public string Shift { get; set; }            // Turno de trabajo ("Mañana", "Tarde", etc.)
+    public string ClinicAddress { get; set; }    
 
-    public string ClinicAddress { get; set; }    // Dirección de la clínica
+    
 
-    // Relación con citas (no con mascotas)
-    // public List<Appointment> Appointments { get; set; } = new List<Appointment>();
-
-    // Constructor
+    // Constructor to initialize veterinarian details along with base person details
     public Veterinarian(
         string name,
         string lastname,
@@ -46,6 +44,7 @@ public class Veterinarian : Person
         ClinicAddress = clinicAddress;
     }
 
+    // Returns a detailed string representation of the veterinarian
     public override string ToString()
     {
         return $@"{base.ToString()}
@@ -55,7 +54,9 @@ public class Veterinarian : Person
             Shift: {Shift}
             Clinic Address: {ClinicAddress}";
     }
-     public string ShowSummary()
+
+    // Returns a short summary string with the veterinarian's full name
+    public string ShowSummary()
     {
         return $"{Name} {LastName}";
     }

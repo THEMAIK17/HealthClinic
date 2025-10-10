@@ -16,6 +16,7 @@ public class AppointmentService
 
     private readonly VeterinarianRepository _veterinarianRepository;
 
+     // Constructor injects repositories
     public AppointmentService(AppointmentRepository appointmentRepository, CustomerRepository customerRepository, PetRepository petRepository, VeterinarianRepository veterinarianRepository)
     {
         _appointmentRepository = appointmentRepository;
@@ -24,11 +25,12 @@ public class AppointmentService
         _veterinarianRepository = veterinarianRepository;
     }
 
-
+     // Register new appointment
     public void RegisterAppointment()
     {
         Console.WriteLine("Register your appointment");
 
+        // Read and validate appointment date, check duplicates
         Console.WriteLine("Please enter a date in datetime format (e.g., 2025-10-10 15:30):");
         DateTime date;
         try
@@ -44,7 +46,7 @@ public class AppointmentService
             Console.WriteLine("enter a correct date in datetime format (e.g., 2025-10-10 15:30)");
             return;
         }
-
+         // Read and validate reason
         Console.WriteLine("enter the reason");
 
         string reason = Console.ReadLine().Trim().ToLower();
@@ -56,7 +58,7 @@ public class AppointmentService
             return;
         }
 
-
+        // Read and validate status
         Console.WriteLine("enter the status format : Programada, Completada, Cancelada");
         string status = Console.ReadLine().Trim().ToLower();
 
@@ -66,7 +68,7 @@ public class AppointmentService
             Console.WriteLine("status is required");
             return;
         }
-
+        // Read and validate Customer ID
         Console.Write("Enter the Customer ID to assign this pet: ");
         string input = Console.ReadLine()?.Trim();
 
@@ -83,7 +85,7 @@ public class AppointmentService
             Console.WriteLine("Customer not found.");
             return;
         }
-
+        // Read and validate Pet ID
         Console.Write("Enter the pet ID to assign this pet: ");
         string input1 = Console.ReadLine().Trim();
 
@@ -99,7 +101,7 @@ public class AppointmentService
             Console.WriteLine("Pet not found.");
             return;
         }
-
+        // Read and validate Veterinarian ID
         Console.Write("Enter the veterinarian ID to assign this pet: ");
         string input2 = Console.ReadLine().Trim();
 
@@ -115,7 +117,7 @@ public class AppointmentService
             Console.WriteLine("Pet not found.");
             return;
         }
-
+        // Create and save appointment
         Appointment appointment = new Appointment(date,
                                                     reason,
                                                     customer,
@@ -130,7 +132,7 @@ public class AppointmentService
 
 
     }
-
+    // Display all appointments
     public void ShowAllAppointments()
     {
         var appointments = _appointmentRepository.ShowAllAppointments();
@@ -149,7 +151,7 @@ public class AppointmentService
         }
 
     }
-
+    // Find appointment by ID
     public Appointment GetAppointmentById()
     {
 
@@ -178,7 +180,7 @@ public class AppointmentService
         }
     }
 
-
+    // Update existing appointment
     public void UpdatedAppointment()
     {
         Console.Write("Enter the ID of the appointment to update: ");
@@ -200,6 +202,7 @@ public class AppointmentService
 
         Console.WriteLine($"\nUpdating data for Appointment");
 
+        // Read and validate new date
         Console.WriteLine("Please enter a date in datetime format (e.g., 2023-10-10 15:30):");
         string inputDate = Console.ReadLine().Trim();
         if (!DateTime.TryParse(inputDate, out DateTime date))
@@ -214,7 +217,7 @@ public class AppointmentService
         }
 
         Console.WriteLine("enter the reason");
-
+        // Read and update reason
         string reason = Console.ReadLine().Trim().ToLower();
 
         if (string.IsNullOrWhiteSpace(reason))
@@ -227,7 +230,7 @@ public class AppointmentService
         {
             appointment.Reason = reason;
         }
-
+        // Read and update status
         Console.WriteLine("into the status");
         string status = Console.ReadLine().Trim().ToLower();
 
@@ -241,7 +244,7 @@ public class AppointmentService
         {
             appointment.Status = status;
         }
-
+        // Read and update Customer
         Console.Write("Enter the Customer ID to assign this pet: ");
         string inputCustomer = Console.ReadLine()?.Trim();
 
@@ -263,6 +266,7 @@ public class AppointmentService
             appointment.Customer = customer;
         }
 
+         // Read and update Pet
         Console.Write("Enter the pet ID to assign this pet: ");
         string input1 = Console.ReadLine().Trim();
 
@@ -282,7 +286,7 @@ public class AppointmentService
         {
             appointment.Pet = pet;
         }
-
+        // Read and update Veterinarian
         Console.Write("Enter the veterinarian ID to assign this pet: ");
         string input2 = Console.ReadLine().Trim();
 
@@ -302,15 +306,13 @@ public class AppointmentService
         {
             appointment.Veterinarian = veterinarian;
         }
-
+        // Save updated appointment
         _appointmentRepository.UpdatedAppointment(appointment);
         Console.WriteLine($"\n appointment {appointment.Id} updated successfully!\n");
 
 
-
-
     }
-
+    // Delete appointment by ID
     public void DeleteAppointment()
     {
         Console.Write("Enter the ID of the appointment to delete: ");
@@ -325,6 +327,8 @@ public class AppointmentService
         _appointmentRepository.DeleteAppointment(guid);
         Console.WriteLine("\n appointment deleted successfully .\n");
     }
+
+    // Seed initial data
     public void SeedAllData()
     {
        

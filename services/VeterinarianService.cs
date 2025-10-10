@@ -9,7 +9,7 @@ using HealthClinic.Models;
 namespace HealthClinic.services;
 
 public class VeterinarianService
-{
+{   
     private readonly VeterinarianRepository _repository;
 
     public VeterinarianService(VeterinarianRepository repository)
@@ -18,7 +18,7 @@ public class VeterinarianService
 
         
     }
-
+    // Method to register a new veterinarian
     public void RegisterVeterinarian()
     {
         Console.WriteLine("Registering a new veterinarian...");
@@ -152,7 +152,7 @@ public class VeterinarianService
         Console.WriteLine($"ID: {veterinarian.Id}");
         
     }
-
+    // Method to display all registered veterinarians
     public void ShowAllVeterinarians()
     {
         var veterinarians = _repository.ShowAllVeterinarians();
@@ -169,7 +169,7 @@ public class VeterinarianService
             Console.WriteLine("--------------------------------------------");
         }
     }
-
+    // Method to find and display a veterinarian by their ID
     public Veterinarian GetVeterinarianById()
 
     {
@@ -194,6 +194,7 @@ public class VeterinarianService
         return vet;
     }
 
+    // Method to update an existing veterinarian's data
     public void UpdateVeterinarian()
     {
         Console.Write("Enter the ID of the veterinarian to update: ");
@@ -205,7 +206,7 @@ public class VeterinarianService
         }
 
         var existingVet = _repository.GetVeterinarianById(vetId);
-        
+
         if (existingVet == null)
         {
             Console.WriteLine(" Veterinarian not found.");
@@ -213,7 +214,7 @@ public class VeterinarianService
         }
 
         Console.WriteLine("Leave fields empty to keep current values.");
-
+        // For each field, prompt for new value or keep current if left empty
         Console.Write($"Enter Name ({existingVet.Name}): ");
         var name = Console.ReadLine().Trim().ToLower();
         if (string.IsNullOrWhiteSpace(name)) name = existingVet.Name;
@@ -265,7 +266,7 @@ public class VeterinarianService
         Console.Write($"Enter Phone ({existingVet.Phone}): ");
         var phone = Console.ReadLine().Trim();
         if (string.IsNullOrWhiteSpace(phone)) phone = existingVet.Phone;
-        
+
         Console.Write($"Enter Birth Day ({existingVet.BirthDay}): ");
         var birthDayInput = Console.ReadLine().Trim();
         DateOnly birthDay;
@@ -275,8 +276,8 @@ public class VeterinarianService
             Console.WriteLine(" Invalid date format.");
             return;
         }
-       
-       Console.Write($"Enter License Number ({existingVet.LicenseNumber}): ");
+
+        Console.Write($"Enter License Number ({existingVet.LicenseNumber}): ");
         var licenseNumber = Console.ReadLine().Trim();
         if (string.IsNullOrWhiteSpace(licenseNumber)) licenseNumber = existingVet.LicenseNumber;
         else if (_repository.ShowAllVeterinarians().Any(v => v.LicenseNumber == licenseNumber && v.Id != vetId))
@@ -323,6 +324,7 @@ public class VeterinarianService
         _repository.UpdateVeterinarian(updatedVet);
         Console.WriteLine("Veterinarian updated successfully!");
     }
+    //Method to delete an existing veterinarian's data
     public void DeleteVeterinarian()
     {
         Console.Write("Enter the ID of the veterinarian to delete: ");
