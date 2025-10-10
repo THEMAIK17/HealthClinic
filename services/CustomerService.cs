@@ -235,7 +235,7 @@ public class CustomerService
         Console.WriteLine($"\n Customer {customer.Name} updated successfully!\n");
     }
 
-    //  ELIMINAR CLIENTE
+
     public void DeleteCustomer()
     {
         Console.Write("Enter the ID of the customer to delete: ");

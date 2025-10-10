@@ -64,7 +64,7 @@ public class PetService
             return;
         }
 
-        // Buscar el cliente
+ 
         var customer = _customers.FirstOrDefault(c => c.Id == customerId);
         if (customer == null)
         {
@@ -72,13 +72,13 @@ public class PetService
             return;
         }
 
-        // Crear mascota
+       
         Pet pet = new Pet(name, specie, age, breed)
         {
             OwnerId = customer.Id
         };
 
-        // Guardar en cliente y repositorio
+ 
         customer.Pets.Add(pet);
         _repository.RegisterPet(pet);
 

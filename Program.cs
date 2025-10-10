@@ -3,6 +3,7 @@ using HealthClinic.Repositories;
 using HealthClinic.Database;
 using HealthClinic.Models;
 using HealthClinic.services;
+using HealthClinic.Utils;
 
 var dbContext = new DatabaseContext();
 
@@ -22,7 +23,12 @@ var appointmentService = new AppointmentService(
     petRepository,
     veterinarianRepository
 );
+var showMenuCustomer = new ShowMenuCustomer(customerService);
+var showMenuPet = new ShowMenuPet(petService);
+var showMenuVeterinarian = new ShowMenuVeterinarian(veterinarianService);
+var showMenuAppointment = new ShowMenuAppointment(appointmentService);
 
+appointmentService.SeedAllData();
 
 bool running = true;
 while (running)
@@ -32,7 +38,7 @@ while (running)
     Console.WriteLine("1. tramites clientes");
     Console.WriteLine("2. tramites mascotas");
     Console.WriteLine("3. tramites veterinarios");
-    Console.WriteLine("4. Mostrar todas las mascotas");
+    Console.WriteLine("4. apartado de citas");
     Console.WriteLine("0. Salir");
     Console.Write("Seleccione una opción: ");
     string option = Console.ReadLine() ?? "";
@@ -40,157 +46,16 @@ while (running)
     switch (option)
     {
         case "1":
-            Console.Clear();
-            Console.WriteLine("\n--- Menú Principal ---");
-            Console.WriteLine("1. registrar cliente");
-            Console.WriteLine("2. mostrar todos los clientes");
-            Console.WriteLine("3. buscar cliente por ID");
-            Console.WriteLine("4. editar cliente");
-            Console.WriteLine("5. eliminar cliente");
-            Console.WriteLine("0. Salir");
-            Console.Write("Seleccione una opción: ");
-            string optionCustomer = Console.ReadLine() ?? "";
-            switch (optionCustomer)
-            {
-                case "1":
-                    customerService.RegisterCustomer();
-                    break;
-                case "2":
-                    customerService.ShowAllCustomers();
-                    break;
-                case "3":
-                    customerService.GetCustomerById();
-                    break;
-                case "4":
-                    customerService.UpdateCustomer();
-                    break;
-                case "5":
-                    customerService.DeleteCustomer();
-                    break;
-                case "0":
-                    running = false;
-                    Console.WriteLine("Saliendo...");
-                    break;
-                default:
-                    Console.WriteLine("Opción inválida. Intente de nuevo.");
-                    break;
-            }
-
+            showMenuCustomer.ShowMenuCustomer1();
             break;
         case "2":
-            Console.Clear();
-            Console.WriteLine("\n--- Menú Principal ---");
-            Console.WriteLine("1. registrar mascota");
-            Console.WriteLine("2. mostrar todas las mascotas");
-            Console.WriteLine("3. buscar mascota por ID");
-            Console.WriteLine("4. editar mascota");
-            Console.WriteLine("5. eliminar mascota");
-            Console.WriteLine("0. Salir");
-            Console.Write("Seleccione una opción: ");
-            string optionPet = Console.ReadLine() ?? "";
-            switch (optionPet)
-            {
-                case "1":
-                    petService.RegisterPet();   
-                    break;
-                case "2":
-                    petService.ShowAllPets();
-                    break;
-                case "3":
-                    petService.GetPetById();
-                    break;
-                case "4":
-                    petService.UpdatePet();
-                    break;
-                case "5":
-                    petService.DeletePet();
-                    break;
-                case "0":
-                    running = false;
-                    Console.WriteLine("Saliendo...");
-                    break;
-                default:
-                    Console.WriteLine("Opción inválida. Intente de nuevo.");
-                    break;
-            }
+            showMenuPet.ShowMenuPet1();
             break;
         case "3":
-            Console.Clear();
-            Console.WriteLine("\n--- Menú Principal ---");
-            Console.WriteLine("1. registrar médico veterinario");
-            Console.WriteLine("2. mostrar todos los médicos veterinarios");
-            Console.WriteLine("3. buscar veterinario por ID");
-            Console.WriteLine("4. editar médico veterinario");
-            Console.WriteLine("5. eliminar veterinario");
-            Console.WriteLine("0. Salir");
-            Console.Write("Seleccione una opción: ");
-
-            string optionVeterinarian = Console.ReadLine() ?? "";
-            switch (optionVeterinarian)
-            {
-                case "1":
-                    veterinarianService.RegisterVeterinarian();   
-                    break;
-                case "2":
-                    veterinarianService.ShowAllVeterinarians();
-                    break;
-                case "3":
-                    veterinarianService.GetVeterinarianById(); 
-                    break;
-                case "4":
-                    veterinarianService.UpdateVeterinarian();
-                    break;
-                case "5":
-                    veterinarianService.DeleteVeterinarian();
-                    break;
-                case "0":
-                    running = false;
-                    Console.WriteLine("Saliendo...");
-                    break;
-                default:
-                    Console.WriteLine("Opción inválida. Intente de nuevo.");
-                    break;
-            }
+            showMenuVeterinarian.showMenuVeterinarian1();
             break;
         case "4":
-            Console.Clear();
-            Console.WriteLine("\n--- Menú Principal ---");
-            Console.WriteLine("1. registrar cita");
-            Console.WriteLine("2. mostrar todas las citas");
-            Console.WriteLine("3. buscar cita por ID");
-            Console.WriteLine("4. editar cita ");
-            Console.WriteLine("5. eliminar cita");
-            Console.WriteLine("0. Salir");
-            Console.Write("Seleccione una opción: ");
-
-            string optionAppointment = Console.ReadLine() ?? "";
-
-            switch (optionAppointment)
-            {
-                
-                case "1":
-                    appointmentService.RegisterAppointment();   
-                    break;
-                case "2":
-                    appointmentService.ShowAllAppointments();
-                    break;
-                case "3":
-                    appointmentService.GetAppointmentById(); 
-                    break;
-                case "4":
-                    appointmentService.UpdatedAppointment();
-                    break;
-                case "5":
-                    appointmentService.DeleteAppointment();
-                    break;
-                case "0":
-                    running = false;
-                    Console.WriteLine("Saliendo...");
-                    break;
-                default:
-                    Console.WriteLine("Opción inválida. Intente de nuevo.");
-                    break;
-            }
+            showMenuAppointment.ShowMenuAppointment1();
             break;
         case "0":
             running = false;
@@ -207,3 +72,4 @@ while (running)
         Console.ReadKey();
     }
 }
+

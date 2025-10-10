@@ -9,16 +9,16 @@ namespace HealthClinic.Models;
 
 public class Appointment
 {
-    public Guid Id { get; set; }                   // Identificador único de la cita
-    public DateTime Date { get; set; }             // Fecha y hora de la cita
-    public string Reason { get; set; }             // Motivo de la cita (vacuna, chequeo, cirugía, etc.)
-    public string Status { get; set; }             // Estado: "Programada", "Completada", "Cancelada"
-    public string Notes { get; set; }              // Observaciones o diagnóstico del veterinario
+    public Guid Id { get; set; }                 
+    public DateTime Date { get; set; }            
+    public string Reason { get; set; }             
+    public string Status { get; set; }             
+    public string Notes { get; set; }              
 
     // Relaciones
-    public Customer Customer { get; set; }         // Cliente que solicita la cita
-    public Pet Pet { get; set; }                   // Mascota atendida
-    public Veterinarian Veterinarian { get; set; } // Veterinario asignado
+    public Customer Customer { get; set; }         
+    public Pet Pet { get; set; }                   
+    public Veterinarian Veterinarian { get; set; } 
 
     // Constructor
     public Appointment(DateTime date,
@@ -31,7 +31,7 @@ public class Appointment
         Id = Guid.NewGuid();
         Date = date;
         Reason = reason;
-        Status = "Programada";  // Valor por defecto
+        Status = status;  
         Customer = customer;
         Pet = pet;
         Veterinarian = veterinarian;
@@ -43,9 +43,9 @@ public class Appointment
                     Date: {Date}
                     reason:{Reason}
                     Status:{Status}
-                    Customer:{Customer}
-                    Pet:{Pet}
-                    Veterinarian{Veterinarian}
+                    Customer:{Customer.ShowSummary()}
+                    Pet:{Pet.ShowSummary()}
+                    Veterinarian: {Veterinarian.ShowSummary()}
         ";
         
     }

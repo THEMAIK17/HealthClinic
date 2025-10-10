@@ -45,7 +45,7 @@ public class Veterinarian : Person
         Shift = shift;
         ClinicAddress = clinicAddress;
     }
-    
+
     public override string ToString()
     {
         return $@"{base.ToString()}
@@ -54,6 +54,10 @@ public class Veterinarian : Person
             Years of Experience: {YearsOfExperience}
             Shift: {Shift}
             Clinic Address: {ClinicAddress}";
+    }
+     public string ShowSummary()
+    {
+        return $"{Name} {LastName}";
     }
 }
 

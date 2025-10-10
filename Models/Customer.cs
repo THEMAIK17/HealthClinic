@@ -8,11 +8,11 @@ using HealthClinic.Models;
 
 namespace HealthClinic.Models
 {
-    public class Customer: Person
+    public class Customer : Person
     {
         internal List<Pet> Pets { get; set; } = new List<Pet>();
 
-        internal Customer( string name,
+        internal Customer(string name,
                            string lastname,
                            String documentType,
                            string document,
@@ -20,11 +20,16 @@ namespace HealthClinic.Models
                            byte age,
                            string address,
                            string phone,
-                           DateOnly birthDay) 
-                           : base(name,lastname,documentType,document,email, age, address, phone, birthDay)
+                           DateOnly birthDay)
+                           : base(name, lastname, documentType, document, email, age, address, phone, birthDay)
         {
             Id = Guid.NewGuid();
 
+        }
+
+        public string ShowSummary()
+        {
+            return $"{Name} {LastName}";
         }
     }
 }
