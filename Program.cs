@@ -15,6 +15,14 @@ var petService = new PetService(petRepository, dbContext.Customers);
 var veterinarianRepository = new VeterinarianRepository(dbContext);
 var veterinarianService = new VeterinarianService(veterinarianRepository);
 
+var appointmentRepository = new AppointmentRepository(dbContext);
+var appointmentService = new AppointmentService(
+    appointmentRepository,
+    customerRepository,
+    petRepository,
+    veterinarianRepository
+);
+
 
 bool running = true;
 while (running)
@@ -145,7 +153,44 @@ while (running)
             }
             break;
         case "4":
-            petService.ShowAllPets();
+            Console.Clear();
+            Console.WriteLine("\n--- Menú Principal ---");
+            Console.WriteLine("1. registrar cita");
+            Console.WriteLine("2. mostrar todas las citas");
+            Console.WriteLine("3. buscar cita por ID");
+            Console.WriteLine("4. editar cita ");
+            Console.WriteLine("5. eliminar cita");
+            Console.WriteLine("0. Salir");
+            Console.Write("Seleccione una opción: ");
+
+            string optionAppointment = Console.ReadLine() ?? "";
+
+            switch (optionAppointment)
+            {
+                
+                case "1":
+                    appointmentService.RegisterAppointment();   
+                    break;
+                case "2":
+                    appointmentService.ShowAllAppointments();
+                    break;
+                case "3":
+                    appointmentService.GetAppointmentById(); 
+                    break;
+                case "4":
+                    appointmentService.UpdatedAppointment();
+                    break;
+                case "5":
+                    appointmentService.DeleteAppointment();
+                    break;
+                case "0":
+                    running = false;
+                    Console.WriteLine("Saliendo...");
+                    break;
+                default:
+                    Console.WriteLine("Opción inválida. Intente de nuevo.");
+                    break;
+            }
             break;
         case "0":
             running = false;

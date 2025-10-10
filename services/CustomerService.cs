@@ -248,6 +248,6 @@ public class CustomerService
         }
 
         _repository.DeleteCustomer(guid);
-        Console.WriteLine("\n Customer deleted successfully (if it existed).\n");
+        Console.WriteLine("\n Customer deleted successfully .\n");
     }
 }
