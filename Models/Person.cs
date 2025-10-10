@@ -6,29 +6,49 @@ namespace HealthClinic.Models;
 
 public abstract class Person
 {
+    // Private backing fields for Address and Phone
     private string address;
     private string phone;
 
+    // Unique identifier for each person
     public Guid Id { get; set; }
-    public String Name { get; set; }
-    public String DocumentType { get; set; }
 
-    public String LastName { get; set; }
-    public String Document { get; set; }
-    public String Email { get; set; }
+    // Person's first name
+    public string Name { get; set; }
+
+    // Type of document (e.g., passport, ID card)
+    public string DocumentType { get; set; }
+
+    // Person's last name
+    public string LastName { get; set; }
+
+    // Document number or identifier
+    public string Document { get; set; }
+
+    // Email address
+    public string Email { get; set; }
+
+    // Date of birth
     public DateOnly BirthDay { get; set; }
-    public Byte Age { get; set; }
-    public  String Address
+
+    // Age in years
+    public byte Age { get; set; }
+
+    // Person's address with getter and setter
+    public string Address
     {
         get => address;
         set => address = value;
     }
-    public String Phone
+
+    // Person's phone number with getter and setter
+    public string Phone
     {
         get => phone;
         set => phone = value;
     }
 
+    // Constructor to initialize all properties and generate a new unique ID
     public Person(string name,
                     string lastname,
                     string documentType,
@@ -51,8 +71,7 @@ public abstract class Person
         BirthDay = birthDay;
     }
 
-
-   
+    // Returns a string representation of the person with all main details
     public virtual string ToString()
     {
         return  $@"Id: {Id}

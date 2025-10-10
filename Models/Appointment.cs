@@ -9,18 +9,27 @@ namespace HealthClinic.Models;
 
 public class Appointment
 {
-    public Guid Id { get; set; }                 
-    public DateTime Date { get; set; }            
-    public string Reason { get; set; }             
-    public string Status { get; set; }             
-    public string Notes { get; set; }              
+    // Unique identifier for the appointment
+    public Guid Id { get; set; }
 
-    // Relaciones
-    public Customer Customer { get; set; }         
-    public Pet Pet { get; set; }                   
-    public Veterinarian Veterinarian { get; set; } 
+    // Date and time of the appointment
+    public DateTime Date { get; set; }
 
-    // Constructor
+    // Reason or purpose for the appointment
+    public string Reason { get; set; }
+
+    // Current status of the appointment (e.g., scheduled, canceled)
+    public string Status { get; set; }
+
+    // Additional notes related to the appointment
+    public string Notes { get; set; }
+
+    // Relationships with other entities
+    public Customer Customer { get; set; }         // Customer who booked the appointment
+    public Pet Pet { get; set; }                   // Pet involved in the appointment
+    public Veterinarian Veterinarian { get; set; } // Veterinarian assigned to the appointment
+
+    // Constructor to initialize an appointment with all required information
     public Appointment(DateTime date,
                         string reason,
                         Customer customer,
@@ -28,7 +37,7 @@ public class Appointment
                         Pet pet,
                         Veterinarian veterinarian)
     {
-        Id = Guid.NewGuid();
+        Id = Guid.NewGuid();  // Generate a new unique ID
         Date = date;
         Reason = reason;
         Status = status;  
@@ -37,6 +46,7 @@ public class Appointment
         Veterinarian = veterinarian;
     }
 
+    // Returns a formatted string with key appointment details
     public virtual string ShowInfoAppointment()
     {
         return $@"  Id: {Id}
@@ -47,17 +57,12 @@ public class Appointment
                     Pet:{Pet.ShowSummary()}
                     Veterinarian: {Veterinarian.ShowSummary()}
         ";
-        
     }
 
-
-    // Método opcional para actualizar el estado
+    // Optional method to update the status of the appointment
     public void UpdateStatus(string newStatus)
     {
         Status = newStatus;
     }
-
-
-
 }
 
