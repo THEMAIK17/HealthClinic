@@ -45,4 +45,8 @@ public class Pet : Animal
         else
             Console.WriteLine($"{Name} hace un sonido desconocido...");
     }
+     public string ShowSummary()
+    {
+        return $"{Name} ({Specie})";
+    }
 }
