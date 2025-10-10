@@ -16,5 +16,8 @@ namespace HealthClinic.Database
 
         private List<Veterinarian> _veterinarians = new List<Veterinarian>();
         public List<Veterinarian> Veterinarians => _veterinarians;
+
+        private List<Appointment> _Appointments = new List<Appointment>();
+        public List<Appointment> Appointments => _Appointments;
     }
 }

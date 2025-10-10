@@ -32,6 +32,20 @@ public class Appointment
         Veterinarian = veterinarian;
     }
 
+    public virtual string ShowInfoAppointment()
+    {
+        return $@"  Id: {Id}
+                    Date: {Date}
+                    reason:{Reason}
+                    Status:{Status}
+                    Customer:{Customer}
+                    Pet:{Pet}
+                    Veterinarian{Veterinarian}
+        ";
+        
+    }
+
+
     // Método opcional para actualizar el estado
     public void UpdateStatus(string newStatus)
     {
