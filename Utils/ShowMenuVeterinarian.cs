@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HealthClinic.Models;
-using HealthClinic.services;
+using HealthClinic.Services;
 
 namespace HealthClinic.Utils
 {

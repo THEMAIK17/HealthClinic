@@ -90,6 +90,13 @@ The solution is organized using a layered architecture with separation of concer
 ├── App.csproj # Project file
 ├── Program.cs # Entry point (Main menu loop)
 │
+|── Core/ 
+| ├── AppInitializer.cs 
+|
+|── Database/
+| ├── DatabaseContext.cs
+| ├── DataSeeder.cs      
+|
 ├── Models/ # Domain entities (data models)
 │ ├── Customer.cs
 │ ├── Pet.cs
@@ -123,7 +130,8 @@ The solution is organized using a layered architecture with separation of concer
 │ └── ShowMenuAppointment.cs
 ```
 ### Layer Responsibilities
-
+- **Core** : Contains the essential business logic, domain rules, and contracts that define the heart of the application.
+- **Database** :Provides the in-memory data context and the DataSeeder class that populates initial sample data.
 - **Models**: Define core entities and their properties.  
 - **Interfaces**: Declare contracts for repositories and services.  
 - **Repositories**: Implement data access logic using the in-memory `DatabaseContext`.  

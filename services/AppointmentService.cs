@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using HealthClinic.Models;
 using HealthClinic.Repositories;
 
-namespace HealthClinic.services;
+namespace HealthClinic.Services;
 
 public class AppointmentService
 {
@@ -328,38 +328,6 @@ public class AppointmentService
         Console.WriteLine("\n appointment deleted successfully .\n");
     }
 
-    // Seed initial data
-    public void SeedAllData()
-    {
-       
-
-        var customer1 = new Customer(
-            "Ana", "Pérez", "DNI", "12345678", "ana.perez@example.com", 30, "123 Main St", "555-1234", new DateOnly(1995, 5, 20)
-        );
-        _customerRepository.RegisterCustomer(customer1);
-
-        var pet1 = new Pet("Fido", "Dog", 4, "Labrador") { OwnerId = customer1.Id };
-        _petRepository.RegisterPet(pet1);
-        customer1.Pets.Add(pet1);
-
-        var vet1 = new Veterinarian(
-            "Juan", "López", "DNI", "87654321", "juan.lopez@clinicavet.com", 45, "456 Vet St", "555-9876",
-            new DateOnly(1980, 3, 15), "VET123456", "Cirugía", 20, "Mañana", "123 Clinic Ave"
-        );
-        _veterinarianRepository.RegisterVeterinarian(vet1);
-
-        var appointment1 = new Appointment(
-        DateTime.Now.AddDays(1),
-        "General Check-up",
-        customer1,
-        "Scheduled",
-        pet1,
-        vet1
-        );
-        _appointmentRepository.RegisterAppointment(appointment1);
-
-        
-    }
 }
 
 

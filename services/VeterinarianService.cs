@@ -6,7 +6,7 @@ using HealthClinic.Repositories;
 using HealthClinic.Models;
 
 
-namespace HealthClinic.services;
+namespace HealthClinic.Services;
 
 public class VeterinarianService
 {   

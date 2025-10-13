@@ -23,9 +23,14 @@ public class Pet : Animal
     }
 
     // Displays detailed info about the pet
-    public virtual void ShowInfo()
+    public virtual string ShowInfo()
     {
-        Console.WriteLine($"Id: {Id}, Pet: {Name}, Specie: {Specie}, Breed: {Breed}, Age: {Age}");
+        return  $@"Id: {Id}, 
+                Pet: {Name}, 
+                Specie: {Specie}, 
+                Breed: {Breed}, 
+                Age: {Age} , 
+                Id owner: {OwnerId}";
     }
 
     // Emits the sound typical for the pet's species
