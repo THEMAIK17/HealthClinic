@@ -99,7 +99,7 @@ public class PetService
 
         foreach (var pet in pets)
         {
-            pet.ShowInfo();
+            Console.WriteLine(pet.ShowInfo());
             pet.SoundEmit();
             Console.WriteLine("------------------");
         }
@@ -125,7 +125,7 @@ public class PetService
         }
 
         Console.WriteLine("\nPet found:\n");
-        pet.ShowInfo();
+        Console.WriteLine(pet.ShowInfo());
         return pet;
     }
 
